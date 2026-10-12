@@ -1,0 +1,1432 @@
+<!DOCTYPE html>
+<html lang="fr" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>YgesTion | Logiciel Tout-en-Un de Gestion Commerciale, Stocks, Caisse & Comptabilité</title>
+  
+  <!-- Script Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#f0f9ff',
+              100: '#e0f2fe',
+              200: '#bae6fd',
+              500: '#0284c7',
+              600: '#0369a1',
+              700: '#075985',
+              800: '#0c4a6e',
+              emerald: '#059669',
+              amber: '#d97706',
+              violet: '#6366f1'
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Polices Google et Icônes Lucide -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+    .hero-glow {
+      background: radial-gradient(circle at 50% 15%, rgba(2, 132, 199, 0.18) 0%, rgba(99, 102, 241, 0.12) 35%, transparent 70%);
+    }
+    .dark .hero-glow {
+      background: radial-gradient(circle at 50% 15%, rgba(2, 132, 199, 0.28) 0%, rgba(99, 102, 241, 0.2) 40%, transparent 75%);
+    }
+    .glassmorphism {
+      background: rgba(255, 255, 255, 0.88);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+    }
+    .dark .glassmorphism {
+      background: rgba(15, 23, 42, 0.88);
+    }
+    @keyframes pulse-slow {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.05); opacity: 0.85; }
+    }
+    .animate-pulse-slow {
+      animation: pulse-slow 3s infinite ease-in-out;
+    }
+    @media print {
+      body * {
+        visibility: hidden;
+      }
+      #printable-receipt-modal, #printable-receipt-modal * {
+        visibility: visible;
+      }
+      #printable-receipt-modal {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        background: white !important;
+        color: black !important;
+      }
+    }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-800 dark:bg-slate-950 dark:text-slate-100 transition-colors duration-300 min-h-screen flex flex-col selection:bg-sky-500 selection:text-white">
+
+  <header class="fixed top-0 left-0 right-0 z-50 border-b border-slate-200/80 dark:border-slate-800/80 glassmorphism transition-all duration-300">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-20">
+        
+        <!-- Logo YgesTion -->
+        <a href="#accueil" class="flex items-center space-x-3 group">
+          <div class="w-11 h-11 rounded-2xl bg-gradient-to-tr from-sky-600 via-indigo-600 to-emerald-500 p-0.5 shadow-md shadow-sky-600/20 group-hover:scale-105 transition-transform">
+            <div class="w-full h-full bg-white dark:bg-slate-900 rounded-[14px] flex items-center justify-center">
+              <span class="text-xl font-black bg-gradient-to-r from-sky-600 to-indigo-600 bg-clip-text text-transparent">Yg</span>
+            </div>
+          </div>
+          <div class="leading-tight">
+            <span class="text-2xl font-black tracking-tight text-slate-900 dark:text-white">
+              Yges<span class="text-sky-600 dark:text-sky-400">Tion</span>
+            </span>
+            <span class="block text-[10px] font-bold tracking-widest uppercase text-slate-400 dark:text-slate-500">Business Cloud</span>
+          </div>
+        </a>
+
+        <!-- Liens de navigation Desktop -->
+        <nav class="hidden lg:flex items-center space-x-1 text-sm font-semibold text-slate-600 dark:text-slate-300">
+          <a href="#solutions" class="px-3.5 py-2 rounded-xl hover:text-sky-600 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800/60 transition-colors">Secteurs Métiers</a>
+          <a href="#demo" class="px-3.5 py-2 rounded-xl text-sky-600 dark:text-sky-400 hover:bg-sky-50 dark:hover:bg-sky-950/50 transition-colors flex items-center gap-1.5 font-bold">
+            <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+            Simulateur Démo
+          </a>
+          <a href="#avantages" class="px-3.5 py-2 rounded-xl hover:text-sky-600 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800/60 transition-colors">Fonctionnalités</a>
+          <a href="#tarifs" class="px-3.5 py-2 rounded-xl hover:text-sky-600 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800/60 transition-colors">Tarifs FCFA</a>
+          <a href="#temoignages" class="px-3.5 py-2 rounded-xl hover:text-sky-600 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800/60 transition-colors">Avis Clients</a>
+          <a href="#contact" class="px-3.5 py-2 rounded-xl hover:text-sky-600 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800/60 transition-colors">Contact</a>
+        </nav>
+
+        <!-- Actions / Bouton Theme / WhatsApp rapide -->
+        <div class="flex items-center space-x-2.5 sm:space-x-3">
+          
+          <!-- Toggle Dark / Light -->
+          <button id="theme-toggle" aria-label="Basculer le mode d'affichage" class="p-2.5 rounded-xl border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-all focus:outline-none">
+            <i data-lucide="sun" id="theme-icon-light" class="w-5 h-5 hidden text-amber-500"></i>
+            <i data-lucide="moon" id="theme-icon-dark" class="w-5 h-5 text-slate-600 dark:text-slate-300"></i>
+          </button>
+
+          <!-- Bouton WhatsApp direct -->
+          <a href="https://wa.me/237698132699?text=Bonjour%20YgesTion,%20je%20souhaite%20d%C3%A9couvrir%20l%27application." target="_blank" rel="noopener noreferrer" class="hidden sm:inline-flex items-center space-x-2 px-3.5 py-2 rounded-xl text-xs font-bold text-emerald-700 dark:text-emerald-300 bg-emerald-50 dark:bg-emerald-950/70 border border-emerald-200 dark:border-emerald-800 hover:bg-emerald-100 dark:hover:bg-emerald-900/50 transition-all shadow-sm">
+            <i data-lucide="message-circle" class="w-4 h-4 text-emerald-500 fill-emerald-500/20"></i>
+            <span>WhatsApp Direct</span>
+          </a>
+
+          <!-- Bouton Appel ou Démo -->
+          <a href="#demo" class="hidden md:inline-flex items-center space-x-2 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold text-white bg-gradient-to-r from-sky-600 to-indigo-600 hover:from-sky-500 hover:to-indigo-500 shadow-md shadow-sky-600/25 active:scale-95 transition-all">
+            <i data-lucide="play" class="w-3.5 h-3.5 fill-white"></i>
+            <span>Essayer Gratuitement</span>
+          </a>
+
+          <!-- Mobile Hamburger -->
+          <button id="mobile-menu-btn" class="lg:hidden p-2.5 rounded-xl border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 focus:outline-none">
+            <i data-lucide="menu" id="menu-icon" class="w-6 h-6"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tiroir Mobile -->
+    <div id="mobile-menu" class="hidden lg:hidden px-4 pt-3 pb-6 space-y-2 border-t border-slate-200 dark:border-slate-800 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md">
+      <a href="#solutions" class="mobile-nav-link block px-4 py-2.5 rounded-xl text-slate-700 dark:text-slate-200 font-medium hover:bg-sky-50 dark:hover:bg-slate-800">Secteurs Métiers</a>
+      <a href="#demo" class="mobile-nav-link block px-4 py-2.5 rounded-xl text-slate-700 dark:text-slate-200 font-medium hover:bg-sky-50 dark:hover:bg-slate-800 text-sky-600 dark:text-sky-400 font-bold">Simulateur Démo Interactive</a>
+      <a href="#avantages" class="mobile-nav-link block px-4 py-2.5 rounded-xl text-slate-700 dark:text-slate-200 font-medium hover:bg-sky-50 dark:hover:bg-slate-800">Fonctionnalités Clés</a>
+      <a href="#tarifs" class="mobile-nav-link block px-4 py-2.5 rounded-xl text-slate-700 dark:text-slate-200 font-medium hover:bg-sky-50 dark:hover:bg-slate-800">Tarifs FCFA</a>
+      <a href="#temoignages" class="mobile-nav-link block px-4 py-2.5 rounded-xl text-slate-700 dark:text-slate-200 font-medium hover:bg-sky-50 dark:hover:bg-slate-800">Témoignages</a>
+      <a href="#contact" class="mobile-nav-link block px-4 py-2.5 rounded-xl text-slate-700 dark:text-slate-200 font-medium hover:bg-sky-50 dark:hover:bg-slate-800">Contact & Devis</a>
+      
+      <div class="pt-3 flex flex-col gap-2">
+        <a href="https://wa.me/237698132699" target="_blank" class="w-full inline-flex items-center justify-center space-x-2 py-3 rounded-xl font-bold text-white bg-emerald-600 hover:bg-emerald-500 shadow-md">
+          <i data-lucide="message-circle" class="w-4 h-4"></i>
+          <span>Discuter sur WhatsApp (+237 698 13 26 99)</span>
+        </a>
+        <a href="tel:+237698132699" class="w-full inline-flex items-center justify-center space-x-2 py-3 rounded-xl font-bold text-slate-800 dark:text-white bg-slate-100 dark:bg-slate-800">
+          <i data-lucide="phone" class="w-4 h-4 text-sky-600"></i>
+          <span>Appeler le support technique</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main class="flex-grow pt-20">
+    <section id="accueil" class="relative pt-12 pb-20 md:pt-24 md:pb-28 hero-glow overflow-hidden">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div class="text-center max-w-4xl mx-auto space-y-7">
+          
+          <!-- Badge d'annonce -->
+          <div class="inline-flex items-center space-x-2.5 px-4 py-1.5 rounded-full bg-white dark:bg-slate-900 border border-sky-200 dark:border-sky-900/60 shadow-sm">
+            <span class="flex h-2.5 w-2.5 relative">
+              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+              <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
+            </span>
+            <span class="text-xs sm:text-sm font-semibold bg-gradient-to-r from-sky-600 via-indigo-600 to-emerald-600 bg-clip-text text-transparent">
+              YgesTion 2026 : Le progiciel de gestion conçu pour les réalités d'Afrique centrale & de l'Ouest
+            </span>
+          </div>
+
+          <!-- Titre percutant -->
+          <h1 class="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-[1.12] text-slate-900 dark:text-white">
+            Prenez le contrôle total de vos ventes, stocks & finances avec 
+            <span class="bg-gradient-to-r from-sky-600 via-indigo-600 to-emerald-500 bg-clip-text text-transparent">YgesTion</span>.
+          </h1>
+
+          <!-- Sous-titre explicatif -->
+          <p class="text-base sm:text-lg lg:text-xl text-slate-600 dark:text-slate-300 font-normal leading-relaxed max-w-3xl mx-auto">
+            La solution logicielle tout-en-un pour <strong>bars & restaurants</strong> (tables & casiers), <strong>supermarchés & boutiques</strong> (caisse tactile & code-barres), <strong>écoles</strong> (écolages & reçus), <strong>cliniques</strong> et <strong>artisans</strong>. Zéro trou de caisse, calcul automatique de vos bénéfices en <strong>FCFA</strong>.
+          </p>
+
+          <!-- Boutons CTA d'action -->
+          <div class="flex flex-col sm:flex-row items-center justify-center gap-4 pt-2">
+            <a href="#demo" class="w-full sm:w-auto inline-flex items-center justify-center space-x-3 px-8 py-4 rounded-2xl font-bold text-white bg-gradient-to-r from-sky-600 via-indigo-600 to-sky-700 hover:opacity-95 shadow-xl shadow-sky-600/25 active:scale-95 transition-all text-base">
+              <i data-lucide="play-circle" class="w-5 h-5"></i>
+              <span>Tester le simulateur interactif</span>
+            </a>
+            
+            <a href="https://wa.me/237698132699?text=Bonjour,%20je%20souhaite%20une%20d%C3%A9monstration%20de%20l%27application%20YgesTion." target="_blank" rel="noopener noreferrer" class="w-full sm:w-auto inline-flex items-center justify-center space-x-2.5 px-8 py-4 rounded-2xl font-bold text-emerald-800 dark:text-emerald-200 bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-300 dark:border-emerald-800 hover:bg-emerald-100 dark:hover:bg-emerald-900/50 active:scale-95 transition-all text-base shadow-sm">
+              <i data-lucide="message-square" class="w-5 h-5 text-emerald-600"></i>
+              <span>Demander une démo WhatsApp</span>
+            </a>
+          </div>
+
+          <!-- Points forts rassurants -->
+          <div class="pt-8 border-t border-slate-200/80 dark:border-slate-800/80 grid grid-cols-2 md:grid-cols-4 gap-4 text-slate-600 dark:text-slate-300 text-xs sm:text-sm font-medium">
+            <div class="flex items-center justify-center space-x-2">
+              <i data-lucide="shield-check" class="w-4 h-4 text-emerald-500 shrink-0"></i>
+              <span>Données chiffrées & fiables</span>
+            </div>
+            <div class="flex items-center justify-center space-x-2">
+              <i data-lucide="wifi-off" class="w-4 h-4 text-sky-500 shrink-0"></i>
+              <span>Fonctionne même hors-connexion</span>
+            </div>
+            <div class="flex items-center justify-center space-x-2">
+              <i data-lucide="printer" class="w-4 h-4 text-indigo-500 shrink-0"></i>
+              <span>Tickets thermiques & factures</span>
+            </div>
+            <div class="flex items-center justify-center space-x-2">
+              <i data-lucide="smartphone" class="w-4 h-4 text-amber-500 shrink-0"></i>
+              <span>Compatible Smartphone & PC</span>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <section id="solutions" class="py-20 bg-white dark:bg-slate-900/60 border-y border-slate-200/70 dark:border-slate-800/80">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div class="text-center max-w-3xl mx-auto mb-14">
+          <span class="text-xs sm:text-sm font-bold uppercase tracking-wider text-sky-600 dark:text-sky-400">Flexibilité Métier Inégalée</span>
+          <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white mt-1">Conçu sur mesure pour votre activité quotidienne</h2>
+          <p class="text-slate-600 dark:text-slate-400 mt-3 text-sm sm:text-base">
+            YgesTion s'adapte à votre réalité. Cliquez sur votre secteur d'activité ci-dessous pour découvrir ses fonctionnalités dédiées.
+          </p>
+        </div>
+
+        <!-- Onglets des 6 secteurs d'activité -->
+        <div class="flex flex-wrap justify-center gap-2 sm:gap-3 mb-10" id="sector-nav-tabs">
+          <button data-target-sector="bar_resto" class="sector-button active px-4 py-3 rounded-2xl font-bold text-xs sm:text-sm flex items-center space-x-2 bg-sky-600 text-white shadow-md shadow-sky-600/20 transition-all">
+            <i data-lucide="utensils" class="w-4 h-4"></i>
+            <span>1. Bars, Restaurants & Lounges</span>
+          </button>
+          
+          <button data-target-sector="supermarket" class="sector-button px-4 py-3 rounded-2xl font-bold text-xs sm:text-sm flex items-center space-x-2 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:text-sky-600 transition-all">
+            <i data-lucide="shopping-cart" class="w-4 h-4"></i>
+            <span>2. Supermarchés & Supérettes</span>
+          </button>
+          
+          <button data-target-sector="boutique" class="sector-button px-4 py-3 rounded-2xl font-bold text-xs sm:text-sm flex items-center space-x-2 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:text-sky-600 transition-all">
+            <i data-lucide="tag" class="w-4 h-4"></i>
+            <span>3. Boutiques & Prêt-à-porter</span>
+          </button>
+          
+          <button data-target-sector="school" class="sector-button px-4 py-3 rounded-2xl font-bold text-xs sm:text-sm flex items-center space-x-2 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:text-sky-600 transition-all">
+            <i data-lucide="graduation-cap" class="w-4 h-4"></i>
+            <span>4. Écoles & Universités</span>
+          </button>
+          
+          <button data-target-sector="health" class="sector-button px-4 py-3 rounded-2xl font-bold text-xs sm:text-sm flex items-center space-x-2 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:text-sky-600 transition-all">
+            <i data-lucide="stethoscope" class="w-4 h-4"></i>
+            <span>5. Cliniques & Santé</span>
+          </button>
+
+          <button data-target-sector="artisan" class="sector-button px-4 py-3 rounded-2xl font-bold text-xs sm:text-sm flex items-center space-x-2 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:text-sky-600 transition-all">
+            <i data-lucide="scissors" class="w-4 h-4"></i>
+            <span>6. Salons, Ateliers & Artisans</span>
+          </button>
+        </div>
+
+        <!-- Fiche descriptive dynamique du secteur -->
+        <div id="sector-display-panel" class="p-8 sm:p-12 rounded-3xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 transition-all duration-300 shadow-xl">
+          <!-- Injecté via JavaScript -->
+        </div>
+
+      </div>
+    </section>
+
+    <section id="demo" class="py-24 bg-slate-50 dark:bg-slate-950 relative overflow-hidden">
+      
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div class="text-center max-w-3xl mx-auto mb-12">
+          <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-200 dark:border-emerald-800 text-emerald-700 dark:text-emerald-300 text-xs font-bold mb-3">
+            <i data-lucide="terminal" class="w-3.5 h-3.5"></i>
+            <span>Simulateur en Ligne 100% Fonctionnel</span>
+          </div>
+          <h2 class="text-3xl sm:text-4xl font-black text-slate-900 dark:text-white">
+            Prenez les commandes de votre tableau de bord
+          </h2>
+          <p class="text-slate-600 dark:text-slate-400 mt-2 text-sm sm:text-base">
+            Testez l'interface en conditions réelles : sélectionnez votre domaine, effectuez des entrées/sorties et générez des reçus conformes.
+          </p>
+        </div>
+
+        <!-- Cadre de l'interface logicielle YgesTion -->
+        <div class="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200/90 dark:border-slate-800 shadow-2xl overflow-hidden">
+          
+          <!-- Barre d'état de l'application -->
+          <div class="p-4 sm:p-6 bg-slate-100/80 dark:bg-slate-800/80 border-b border-slate-200 dark:border-slate-800 flex flex-wrap items-center justify-between gap-4">
+            <div class="flex items-center space-x-3">
+              <span class="w-3 h-3 rounded-full bg-red-400"></span>
+              <span class="w-3 h-3 rounded-full bg-amber-400"></span>
+              <span class="w-3 h-3 rounded-full bg-emerald-400"></span>
+              <div class="h-4 w-[1px] bg-slate-300 dark:bg-slate-700 mx-2"></div>
+              <span class="font-bold text-sm text-slate-800 dark:text-slate-200 flex items-center gap-2">
+                <i data-lucide="layout-dashboard" class="w-4 h-4 text-sky-500"></i>
+                <span>YgesTion Workspace • Démo Live</span>
+              </span>
+            </div>
+
+            <!-- Sélecteur de secteur dans le simulateur -->
+            <div class="flex items-center space-x-2">
+              <label for="demo-activity-select" class="text-xs font-bold text-slate-500 dark:text-slate-400">Changer de Métier :</label>
+              <select id="demo-activity-select" class="text-xs sm:text-sm font-bold bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl px-3.5 py-1.5 focus:outline-none focus:ring-2 focus:ring-sky-500 text-slate-800 dark:text-white">
+                <option value="bar_resto">Bar, Restaurant & Lounge (Tables, Casiers)</option>
+                <option value="supermarket">Supermarché & Supérette (Caisse, Rayons)</option>
+                <option value="boutique">Boutique & Prêt-à-porter (Tailles, WhatsApp)</option>
+                <option value="school">École & Université (Scolarités, Écolages)</option>
+                <option value="health">Clinique & Pharmacie (Consultations, Médicaments)</option>
+                <option value="artisan">Salon, Atelier & Artisan (Prestations, Rendez-vous)</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="p-6 lg:p-8 grid grid-cols-1 lg:grid-cols-12 gap-8">
+            
+            <!-- Statistiques dynamiques en temps réel -->
+            <div class="lg:col-span-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              
+              <!-- Recettes -->
+              <div class="p-5 rounded-2xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-800">
+                <div class="flex items-center justify-between text-slate-500 dark:text-slate-400 text-xs font-bold uppercase tracking-wider mb-2">
+                  <span id="demo-label-income">Encaissements du jour</span>
+                  <i data-lucide="arrow-down-left" class="w-4 h-4 text-emerald-500"></i>
+                </div>
+                <div class="text-2xl font-black text-emerald-600 dark:text-emerald-400" id="demo-total-income">
+                  0 FCFA
+                </div>
+                <p class="text-[11px] text-slate-400 mt-1">Cumul des ventes & entrées</p>
+              </div>
+
+              <!-- Dépenses -->
+              <div class="p-5 rounded-2xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-800">
+                <div class="flex items-center justify-between text-slate-500 dark:text-slate-400 text-xs font-bold uppercase tracking-wider mb-2">
+                  <span id="demo-label-expense">Dépenses & Achats</span>
+                  <i data-lucide="arrow-up-right" class="w-4 h-4 text-rose-500"></i>
+                </div>
+                <div class="text-2xl font-black text-rose-600 dark:text-rose-400" id="demo-total-expense">
+                  0 FCFA
+                </div>
+                <p class="text-[11px] text-slate-400 mt-1">Fournisseurs, charges & sorties</p>
+              </div>
+
+              <!-- Solde de trésorerie net -->
+              <div class="p-5 rounded-2xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-800">
+                <div class="flex items-center justify-between text-slate-500 dark:text-slate-400 text-xs font-bold uppercase tracking-wider mb-2">
+                  <span>Trésorerie / Solde Net</span>
+                  <i data-lucide="wallet" class="w-4 h-4 text-sky-500"></i>
+                </div>
+                <div class="text-2xl font-black text-sky-600 dark:text-sky-400" id="demo-net-balance">
+                  0 FCFA
+                </div>
+                <p class="text-[11px] text-slate-400 mt-1">Bénéfice immédiat calculé</p>
+              </div>
+
+              <!-- Nombre d'opérations -->
+              <div class="p-5 rounded-2xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-800">
+                <div class="flex items-center justify-between text-slate-500 dark:text-slate-400 text-xs font-bold uppercase tracking-wider mb-2">
+                  <span>Opérations traitées</span>
+                  <i data-lucide="activity" class="w-4 h-4 text-indigo-500"></i>
+                </div>
+                <div class="text-2xl font-black text-indigo-600 dark:text-indigo-400" id="demo-count-ops">
+                  0
+                </div>
+                <p class="text-[11px] text-slate-400 mt-1">Tickets & factures archivés</p>
+              </div>
+
+            </div>
+
+            <!-- Formulaire d'ajout d'écriture -->
+            <div class="lg:col-span-5 bg-slate-50 dark:bg-slate-800/40 p-6 rounded-2xl border border-slate-200 dark:border-slate-800 flex flex-col justify-between">
+              <div>
+                <h3 class="text-base font-bold text-slate-900 dark:text-white flex items-center gap-2 mb-4">
+                  <i data-lucide="plus-circle" class="w-5 h-5 text-sky-500"></i>
+                  <span>Nouvelle Opération de Caisse</span>
+                </h3>
+
+                <form id="sim-transaction-form" class="space-y-4">
+                  
+                  <div>
+                    <label class="block text-xs font-bold uppercase text-slate-600 dark:text-slate-400 mb-1.5">Mouvement</label>
+                    <div class="grid grid-cols-2 gap-2">
+                      <label class="flex items-center justify-center p-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 cursor-pointer has-[:checked]:border-emerald-500 has-[:checked]:text-emerald-600 font-bold text-xs transition-all">
+                        <input type="radio" name="simTxType" value="income" checked class="hidden">
+                        <span class="flex items-center gap-1.5"><i data-lucide="arrow-down-left" class="w-4 h-4"></i> Vente / Entrée</span>
+                      </label>
+                      <label class="flex items-center justify-center p-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 cursor-pointer has-[:checked]:border-rose-500 has-[:checked]:text-rose-600 font-bold text-xs transition-all">
+                        <input type="radio" name="simTxType" value="expense" class="hidden">
+                        <span class="flex items-center gap-1.5"><i data-lucide="arrow-up-right" class="w-4 h-4"></i> Achat / Dépense</span>
+                      </label>
+                    </div>
+                  </div>
+
+                  <div>
+                    <label for="sim-label" class="block text-xs font-bold uppercase text-slate-600 dark:text-slate-400 mb-1">Désignation / Motif</label>
+                    <input type="text" id="sim-label" required placeholder="Ex: Table 4, Inscription T1, Vente Robe..." class="w-full text-xs sm:text-sm px-3.5 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-sky-500">
+                  </div>
+
+                  <div class="grid grid-cols-2 gap-3">
+                    <div>
+                      <label for="sim-amount" class="block text-xs font-bold uppercase text-slate-600 dark:text-slate-400 mb-1">Montant (FCFA)</label>
+                      <input type="number" id="sim-amount" required min="100" step="100" placeholder="15000" class="w-full text-xs sm:text-sm px-3.5 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-sky-500">
+                    </div>
+                    <div>
+                      <label for="sim-payment" class="block text-xs font-bold uppercase text-slate-600 dark:text-slate-400 mb-1">Paiement</label>
+                      <select id="sim-payment" class="w-full text-xs sm:text-sm px-3 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-sky-500">
+                        <option value="Espèces">Espèces (Caisse)</option>
+                        <option value="Mobile Money">Orange / MTN MoMo</option>
+                        <option value="Virement Bancaire">Virement bancaire</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <button type="submit" class="w-full py-3 px-4 rounded-xl font-bold text-white bg-sky-600 hover:bg-sky-500 active:scale-95 shadow-md shadow-sky-600/20 transition-all text-xs sm:text-sm flex items-center justify-center space-x-2">
+                    <i data-lucide="check-circle" class="w-4 h-4"></i>
+                    <span>Enregistrer dans la caisse</span>
+                  </button>
+                </form>
+              </div>
+
+              <!-- Jauge de rentabilité -->
+              <div class="mt-6 pt-5 border-t border-slate-200 dark:border-slate-800">
+                <div class="flex items-center justify-between text-xs font-bold mb-1">
+                  <span class="text-slate-500 dark:text-slate-400">Ratio de bénéfice opérationnel</span>
+                  <span class="text-emerald-500 font-extrabold" id="demo-margin-text">0%</span>
+                </div>
+                <div class="w-full h-2.5 rounded-full bg-slate-200 dark:bg-slate-700 overflow-hidden">
+                  <div class="h-full bg-gradient-to-r from-sky-500 to-emerald-500 rounded-full transition-all duration-500" id="demo-margin-bar" style="width: 0%"></div>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- Tableau des écritures récentes -->
+            <div class="lg:col-span-7 flex flex-col justify-between">
+              <div>
+                <div class="flex items-center justify-between mb-4">
+                  <h3 class="text-base font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                    <i data-lucide="receipt" class="w-5 h-5 text-indigo-500"></i>
+                    <span>Journal des Opérations Récentes</span>
+                  </h3>
+                  <button id="sim-reset-btn" class="text-xs text-slate-500 hover:text-sky-600 dark:text-slate-400 underline flex items-center gap-1 font-semibold">
+                    <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i> Restaurer exemples
+                  </button>
+                </div>
+
+                <div class="overflow-x-auto border border-slate-200 dark:border-slate-800 rounded-2xl bg-white dark:bg-slate-900">
+                  <table class="w-full text-left text-xs sm:text-sm">
+                    <thead>
+                      <tr class="border-b border-slate-200 dark:border-slate-800 text-slate-400 uppercase text-[11px] bg-slate-50/50 dark:bg-slate-800/50">
+                        <th class="py-3 px-4 font-bold">Libellé</th>
+                        <th class="py-3 px-3 font-bold">Règlement</th>
+                        <th class="py-3 px-3 font-bold text-right">Montant</th>
+                        <th class="py-3 px-3 font-bold text-center">Ticket</th>
+                      </tr>
+                    </thead>
+                    <tbody id="sim-table-body" class="divide-y divide-slate-100 dark:divide-slate-800/60 font-medium">
+                      <!-- Rempli en JS -->
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+              <!-- Message d'information sur les reçus -->
+              <div class="mt-4 p-3.5 rounded-xl bg-sky-50 dark:bg-sky-950/60 border border-sky-200 dark:border-sky-800 text-sky-800 dark:text-sky-200 text-xs flex items-center justify-between">
+                <span class="flex items-center gap-2">
+                  <i data-lucide="printer" class="w-4 h-4 text-sky-600 shrink-0"></i>
+                  <span>Cliquez sur l'icône imprimante à droite d'une ligne pour prévisualiser et imprimer le reçu officiel.</span>
+                </span>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <section id="avantages" class="py-20 bg-white dark:bg-slate-900/60 border-t border-slate-200/70 dark:border-slate-800/80">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div class="text-center max-w-3xl mx-auto mb-16">
+          <span class="text-xs sm:text-sm font-bold uppercase tracking-wider text-sky-600 dark:text-sky-400">Fiabilité & Performance</span>
+          <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white mt-1">Pourquoi les gestionnaires choisissent YgesTion</h2>
+          <p class="text-slate-600 dark:text-slate-400 mt-2 text-sm sm:text-base">
+            Développé pour résoudre les véritables défis sur le terrain : coupures de réseau, fraudes, et gestion multi-employés.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          
+          <div class="p-8 rounded-3xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-800 hover:shadow-xl transition-all">
+            <div class="w-12 h-12 rounded-2xl bg-sky-100 dark:bg-sky-950 flex items-center justify-center text-sky-600 dark:text-sky-400 mb-6">
+              <i data-lucide="smartphone" class="w-6 h-6"></i>
+            </div>
+            <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-2">Suivi sur Smartphone & Tablette</h3>
+            <p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">
+              Consultez vos ventes en temps réel, même en déplacement, directement depuis votre téléphone WhatsApp ou navigateur web.
+            </p>
+          </div>
+
+          <div class="p-8 rounded-3xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-800 hover:shadow-xl transition-all">
+            <div class="w-12 h-12 rounded-2xl bg-emerald-100 dark:bg-emerald-950 flex items-center justify-center text-emerald-600 dark:text-emerald-400 mb-6">
+              <i data-lucide="lock" class="w-6 h-6"></i>
+            </div>
+            <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-2">Protection Antifraude & Rôles</h3>
+            <p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">
+              Attribuez des permissions ciblées : vos caissiers ou serveurs enregistrent sans pouvoir modifier les totaux ou voir votre bénéfice net.
+            </p>
+          </div>
+
+          <div class="p-8 rounded-3xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-800 hover:shadow-xl transition-all">
+            <div class="w-12 h-12 rounded-2xl bg-indigo-100 dark:bg-indigo-950 flex items-center justify-center text-indigo-600 dark:text-indigo-400 mb-6">
+              <i data-lucide="printer" class="w-6 h-6"></i>
+            </div>
+            <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-2">Impression & Envoi WhatsApp</h3>
+            <p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">
+              Imprimez sur n'importe quelle imprimante thermique de caisse (58mm/80mm) ou transmettez le reçu instantanément par message WhatsApp au client.
+            </p>
+          </div>
+
+          <div class="p-8 rounded-3xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-800 hover:shadow-xl transition-all">
+            <div class="w-12 h-12 rounded-2xl bg-amber-100 dark:bg-amber-950 flex items-center justify-center text-amber-600 dark:text-amber-400 mb-6">
+              <i data-lucide="package" class="w-6 h-6"></i>
+            </div>
+            <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-2">Inventaires & Casiers Précis</h3>
+            <p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">
+              Fini les disparitions inexpliquées. Suivez les entrées et sorties de chaque bouteille, casier ou carton avec alertes automatiques de réapprovisionnement.
+            </p>
+          </div>
+
+          <div class="p-8 rounded-3xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-800 hover:shadow-xl transition-all">
+            <div class="w-12 h-12 rounded-2xl bg-rose-100 dark:bg-rose-950 flex items-center justify-center text-rose-600 dark:text-rose-400 mb-6">
+              <i data-lucide="bell" class="w-6 h-6"></i>
+            </div>
+            <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-2">Gestion des Crédits & Dettes</h3>
+            <p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">
+              Ne perdez plus un centime de vos créances : suivez les carnets de crédit clients et recevez des alertes pour les paiements en retard.
+            </p>
+          </div>
+
+          <div class="p-8 rounded-3xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-800 hover:shadow-xl transition-all">
+            <div class="w-12 h-12 rounded-2xl bg-cyan-100 dark:bg-cyan-950 flex items-center justify-center text-cyan-600 dark:text-cyan-400 mb-6">
+              <i data-lucide="headphones" class="w-6 h-6"></i>
+            </div>
+            <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-2">Support Technique Direct</h3>
+            <p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">
+              Une assistance locale disponible par téléphone et WhatsApp au <strong>+237 698 13 26 99</strong> pour former votre équipe et vous accompagner pas à pas.
+            </p>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <section id="tarifs" class="py-24 bg-slate-50 dark:bg-slate-950">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div class="text-center max-w-3xl mx-auto mb-16">
+          <span class="text-xs sm:text-sm font-bold uppercase tracking-wider text-sky-600 dark:text-sky-400">Tarification Claire & Accessible</span>
+          <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white mt-1">Investissez dans la rentabilité de votre structure</h2>
+          <p class="text-slate-600 dark:text-slate-400 mt-2 text-sm sm:text-base">
+            Tous nos tarifs sont libellés en <strong>Francs CFA (XAF)</strong> avec possibilité de règlement par Mobile Money (Orange Money, MTN MoMo) ou virement.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch">
+          
+          <!-- Plan Starter -->
+          <div class="p-8 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex flex-col justify-between">
+            <div>
+              <span class="text-xs font-bold uppercase tracking-wider text-slate-500">Formule Starter</span>
+              <h3 class="text-2xl font-black text-slate-900 dark:text-white mt-1">Boutiques & Artisans</h3>
+              <p class="text-xs text-slate-500 mt-2">Parfait pour un point de vente unique ou un atelier d'artisanat.</p>
+              
+              <div class="my-6">
+                <span class="text-4xl font-black text-slate-900 dark:text-white">15 000</span>
+                <span class="text-sm font-bold text-slate-500">FCFA / mois</span>
+                <div class="text-[11px] text-slate-400">ou 150 000 FCFA / an (-15%)</div>
+              </div>
+
+              <ul class="space-y-3 text-xs sm:text-sm text-slate-600 dark:text-slate-300">
+                <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-500 shrink-0"></i> 1 Caisse de vente enregistreuse</li>
+                <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-500 shrink-0"></i> Suivi des ventes & dépenses journalières</li>
+                <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-500 shrink-0"></i> Envoi des tickets par WhatsApp</li>
+                <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-500 shrink-0"></i> 2 Comptes utilisateurs simultanés</li>
+                <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-500 shrink-0"></i> Sauvegarde quotidienne dans le cloud</li>
+              </ul>
+            </div>
+
+            <a href="https://wa.me/237698132699?text=Bonjour,%20je%20souhaite%20souscrire%20au%20forfait%20Starter%20YgesTion%20(15.000%20FCFA)." target="_blank" class="mt-8 block text-center py-3.5 px-4 rounded-xl font-bold text-slate-800 dark:text-white bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 transition-all text-xs sm:text-sm">
+              Choisir la formule Starter
+            </a>
+          </div>
+
+          <!-- Plan Pro Commercial (Recommandé) -->
+          <div class="p-8 rounded-3xl bg-gradient-to-b from-sky-50 to-white dark:from-slate-900 dark:to-slate-900 border-2 border-sky-600 shadow-2xl relative flex flex-col justify-between">
+            <span class="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full text-[11px] font-black uppercase tracking-wider text-white bg-sky-600">
+              Le plus populaire
+            </span>
+
+            <div>
+              <span class="text-xs font-bold uppercase tracking-wider text-sky-600 dark:text-sky-400">Formule Pro Business</span>
+              <h3 class="text-2xl font-black text-slate-900 dark:text-white mt-1">Bars, Restos & Supermarchés</h3>
+              <p class="text-xs text-slate-500 mt-2">Pour commerces et établissements avec inventaire continu.</p>
+              
+              <div class="my-6">
+                <span class="text-4xl font-black text-slate-900 dark:text-white">35 000</span>
+                <span class="text-sm font-bold text-slate-500">FCFA / mois</span>
+                <div class="text-[11px] text-slate-400">ou 350 000 FCFA / an (2 mois offerts)</div>
+              </div>
+
+              <ul class="space-y-3 text-xs sm:text-sm text-slate-600 dark:text-slate-300">
+                <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-500 shrink-0"></i> Gestion des tables, barmans et cuisine</li>
+                <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-500 shrink-0"></i> Suivi précis des casiers et bouteilles</li>
+                <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-500 shrink-0"></i> Lecteur code-barres & alertes de péremption</li>
+                <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-500 shrink-0"></i> Clôture de caisse par shift de serveur</li>
+                <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-500 shrink-0"></i> Jusqu'à 10 utilisateurs & postes de travail</li>
+                <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-500 shrink-0"></i> Rapports financiers exportables en PDF & Excel</li>
+              </ul>
+            </div>
+
+            <a href="https://wa.me/237698132699?text=Bonjour,%20je%20souhaite%20souscrire%20au%20forfait%20Pro%20Business%20YgesTion%20(35.000%20FCFA)." target="_blank" class="mt-8 block text-center py-3.5 px-4 rounded-xl font-bold text-white bg-sky-600 hover:bg-sky-500 shadow-md shadow-sky-600/30 transition-all text-xs sm:text-sm">
+              Prendre la Formule Pro
+            </a>
+          </div>
+
+          <!-- Plan Établissement & Santé -->
+          <div class="p-8 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex flex-col justify-between">
+            <div>
+              <span class="text-xs font-bold uppercase tracking-wider text-slate-500">Formule Institutionnelle</span>
+              <h3 class="text-2xl font-black text-slate-900 dark:text-white mt-1">Écoles, Universités & Santé</h3>
+              <p class="text-xs text-slate-500 mt-2">Pour la rigueur administrative, dossiers élèves et patients.</p>
+              
+              <div class="my-6">
+                <span class="text-3xl font-black text-slate-900 dark:text-white">Sur Devis</span>
+                <span class="text-xs font-bold text-slate-500">/ Déploiement personnalisé</span>
+                <div class="text-[11px] text-slate-400">Installation locale ou Cloud dédié</div>
+              </div>
+
+              <ul class="space-y-3 text-xs sm:text-sm text-slate-600 dark:text-slate-300">
+                <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-500 shrink-0"></i> Gestion des scolarités & reçus infalsifiables</li>
+                <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-500 shrink-0"></i> Dossiers patients & pharmacie hospitalière</li>
+                <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-500 shrink-0"></i> Nombre d'utilisateurs illimité</li>
+                <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-500 shrink-0"></i> Formation du personnel sur site</li>
+                <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-500 shrink-0"></i> Support prioritaire 7j/7 avec technicien dédié</li>
+              </ul>
+            </div>
+
+            <a href="#contact" class="mt-8 block text-center py-3.5 px-4 rounded-xl font-bold text-slate-800 dark:text-white bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 transition-all text-xs sm:text-sm">
+              Demander un devis institutionnel
+            </a>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <section id="temoignages" class="py-20 bg-white dark:bg-slate-900/60 border-t border-slate-200/70 dark:border-slate-800/80">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div class="text-center max-w-3xl mx-auto mb-16">
+          <span class="text-xs sm:text-sm font-bold uppercase tracking-wider text-sky-600 dark:text-sky-400">Retours d'expérience</span>
+          <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white mt-1">Ils pilotent leur rentabilité avec YgesTion</h2>
+          <p class="text-slate-600 dark:text-slate-400 mt-2 text-sm sm:text-base">
+            Découvrez comment des gérants et chefs d'établissement ont assaini leurs finances.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          
+          <div class="p-8 rounded-3xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-800 flex flex-col justify-between">
+            <div>
+              <div class="flex items-center space-x-1 text-amber-400 mb-4">
+                <i data-lucide="star" class="w-4 h-4 fill-amber-400"></i>
+                <i data-lucide="star" class="w-4 h-4 fill-amber-400"></i>
+                <i data-lucide="star" class="w-4 h-4 fill-amber-400"></i>
+                <i data-lucide="star" class="w-4 h-4 fill-amber-400"></i>
+                <i data-lucide="star" class="w-4 h-4 fill-amber-400"></i>
+              </div>
+              <p class="text-slate-700 dark:text-slate-300 text-sm italic leading-relaxed">
+                « Avant YgesTion, nous avions chaque week-end des écarts sur les casiers de bières et les tickets de serveurs dans notre lounge. Dès le premier mois, nous avons stoppé les pertes et nos recettes ont augmenté de 22%. »
+              </p>
+            </div>
+            <div class="mt-6 pt-4 border-t border-slate-200 dark:border-slate-700 flex items-center space-x-3">
+              <div class="w-10 h-10 rounded-full bg-sky-600 text-white font-bold flex items-center justify-center text-sm">
+                MK
+              </div>
+              <div>
+                <p class="text-sm font-bold text-slate-900 dark:text-white">Michel K.</p>
+                <p class="text-xs text-slate-400">Gérant de Restaurant-Lounge</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="p-8 rounded-3xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-800 flex flex-col justify-between">
+            <div>
+              <div class="flex items-center space-x-1 text-amber-400 mb-4">
+                <i data-lucide="star" class="w-4 h-4 fill-amber-400"></i>
+                <i data-lucide="star" class="w-4 h-4 fill-amber-400"></i>
+                <i data-lucide="star" class="w-4 h-4 fill-amber-400"></i>
+                <i data-lucide="star" class="w-4 h-4 fill-amber-400"></i>
+                <i data-lucide="star" class="w-4 h-4 fill-amber-400"></i>
+              </div>
+              <p class="text-slate-700 dark:text-slate-300 text-sm italic leading-relaxed">
+                « La gestion des écolages des 850 élèves de notre complexe scolaire était un casse-tête entre faux reçus et retards. YgesTion a sécurisé la caisse avec des reçus infalsifiables et les relances automatisées. »
+              </p>
+            </div>
+            <div class="mt-6 pt-4 border-t border-slate-200 dark:border-slate-700 flex items-center space-x-3">
+              <div class="w-10 h-10 rounded-full bg-indigo-600 text-white font-bold flex items-center justify-center text-sm">
+                SB
+              </div>
+              <div>
+                <p class="text-sm font-bold text-slate-900 dark:text-white">Sœur Béatrice M.</p>
+                <p class="text-xs text-slate-400">Économe d'Établissement Scolaire</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="p-8 rounded-3xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-800 flex flex-col justify-between">
+            <div>
+              <div class="flex items-center space-x-1 text-amber-400 mb-4">
+                <i data-lucide="star" class="w-4 h-4 fill-amber-400"></i>
+                <i data-lucide="star" class="w-4 h-4 fill-amber-400"></i>
+                <i data-lucide="star" class="w-4 h-4 fill-amber-400"></i>
+                <i data-lucide="star" class="w-4 h-4 fill-amber-400"></i>
+                <i data-lucide="star" class="w-4 h-4 fill-amber-400"></i>
+              </div>
+              <p class="text-slate-700 dark:text-slate-300 text-sm italic leading-relaxed">
+                « Notre supérette compte plus de 4 000 références. Le scan des codes-barres est ultra rapide à la caisse et nous sommes immédiatement prévenus des produits proches de la date de péremption. »
+              </p>
+            </div>
+            <div class="mt-6 pt-4 border-t border-slate-200 dark:border-slate-700 flex items-center space-x-3">
+              <div class="w-10 h-10 rounded-full bg-emerald-600 text-white font-bold flex items-center justify-center text-sm">
+                AT
+              </div>
+              <div>
+                <p class="text-sm font-bold text-slate-900 dark:text-white">Alain Tchinda</p>
+                <p class="text-xs text-slate-400">Directeur de Supérette</p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <section id="contact" class="py-24 bg-slate-50 dark:bg-slate-950 border-t border-slate-200/70 dark:border-slate-800/80">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+          
+          <div class="lg:col-span-5 space-y-6">
+            <span class="text-xs sm:text-sm font-bold uppercase tracking-wider text-sky-600 dark:text-sky-400">Contact & Support Direct</span>
+            <h2 class="text-3xl sm:text-4xl font-black text-slate-900 dark:text-white leading-tight">
+              Parlons de votre projet de gestion aujourd'hui.
+            </h2>
+            <p class="text-slate-600 dark:text-slate-400 text-sm sm:text-base leading-relaxed">
+              Une question, besoin d'une installation en présentiel ou d'un devis pour votre établissement ? Notre équipe technique vous répond immédiatement.
+            </p>
+
+            <div class="space-y-4 pt-4">
+              
+              <!-- Téléphone & WhatsApp -->
+              <div class="p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm flex items-start space-x-4">
+                <div class="w-12 h-12 rounded-xl bg-emerald-100 dark:bg-emerald-950 flex items-center justify-center text-emerald-600 dark:text-emerald-400 shrink-0 mt-0.5">
+                  <i data-lucide="phone-call" class="w-6 h-6"></i>
+                </div>
+                <div class="space-y-1">
+                  <p class="text-xs font-bold text-slate-400 uppercase tracking-wider">Assistance Téléphonique & WhatsApp</p>
+                  <div class="flex flex-wrap items-center gap-2">
+                    <a href="tel:+237698132699" class="text-base font-black text-slate-900 dark:text-white hover:text-sky-600 transition-colors">
+                      +237 698 13 26 99
+                    </a>
+                  </div>
+                  <div class="pt-1 flex gap-2">
+                    <a href="https://wa.me/237698132699?text=Bonjour,%20je%20souhaite%20contacter%20l%27assistance%20YgesTion." target="_blank" rel="noopener noreferrer" class="inline-flex items-center space-x-1 px-3 py-1 rounded-lg text-xs font-bold bg-emerald-600 text-white hover:bg-emerald-500 shadow-sm transition-all">
+                      <i data-lucide="message-circle" class="w-3.5 h-3.5"></i>
+                      <span>Ouvrir WhatsApp</span>
+                    </a>
+                    <a href="tel:+237698132699" class="inline-flex items-center space-x-1 px-3 py-1 rounded-lg text-xs font-bold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:bg-slate-200 transition-all">
+                      <i data-lucide="phone" class="w-3.5 h-3.5"></i>
+                      <span>Appeler</span>
+                    </a>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Courriel officiel -->
+              <div class="p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm flex items-start space-x-4">
+                <div class="w-12 h-12 rounded-xl bg-sky-100 dark:bg-sky-950 flex items-center justify-center text-sky-600 dark:text-sky-400 shrink-0 mt-0.5">
+                  <i data-lucide="mail" class="w-6 h-6"></i>
+                </div>
+                <div class="space-y-1">
+                  <p class="text-xs font-bold text-slate-400 uppercase tracking-wider">Courriel Officiel</p>
+                  <a href="mailto:yoanemmanuela@yahoo.com" class="text-base font-black text-slate-900 dark:text-white hover:text-sky-600 transition-colors block">
+                    yoanemmanuela@yahoo.com
+                  </a>
+                  <a href="mailto:yoanemmanuela@yahoo.com" class="inline-flex items-center space-x-1 text-xs font-bold text-sky-600 dark:text-sky-400 hover:underline">
+                    <i data-lucide="send" class="w-3.5 h-3.5"></i>
+                    <span>Envoyer un courriel direct</span>
+                  </a>
+                </div>
+              </div>
+
+              <!-- Déploiement rapide -->
+              <div class="p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm flex items-center space-x-4">
+                <div class="w-12 h-12 rounded-xl bg-indigo-100 dark:bg-indigo-950 flex items-center justify-center text-indigo-600 dark:text-indigo-400 shrink-0">
+                  <i data-lucide="clock" class="w-6 h-6"></i>
+                </div>
+                <div>
+                  <p class="text-xs font-bold text-slate-400 uppercase tracking-wider">Disponibilité</p>
+                  <p class="text-sm font-bold text-slate-800 dark:text-slate-200">Lundi au Samedi : 07h30 - 20h00 (Urgences 7j/7)</p>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- Formulaire de demande de démo ou devis -->
+          <div class="lg:col-span-7">
+            <div class="bg-white dark:bg-slate-900 p-8 sm:p-10 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-2xl">
+              
+              <!-- Alerte de succès -->
+              <div id="contact-success-box" class="hidden mb-6 p-4 rounded-2xl bg-emerald-50 dark:bg-emerald-950/70 border border-emerald-300 dark:border-emerald-800 text-emerald-800 dark:text-emerald-200 text-sm flex items-start space-x-3">
+                <i data-lucide="check-circle-2" class="w-5 h-5 text-emerald-500 shrink-0 mt-0.5"></i>
+                <div>
+                  <p class="font-bold">Demande transmise avec succès !</p>
+                  <p class="text-xs text-emerald-700 dark:text-emerald-300 mt-0.5">Notre responsable clientèle vous contactera par appel/WhatsApp au numéro renseigné dans un délai de 2h.</p>
+                </div>
+              </div>
+
+              <form id="contact-demo-form" class="space-y-4">
+                
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label class="block text-xs font-bold uppercase text-slate-600 dark:text-slate-400 mb-1.5">Votre Nom & Prénom</label>
+                    <input type="text" id="contact-name" required placeholder="Ex: Paul Nguemo" class="w-full text-xs sm:text-sm px-4 py-3 rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-sky-500">
+                  </div>
+                  <div>
+                    <label class="block text-xs font-bold uppercase text-slate-600 dark:text-slate-400 mb-1.5">Numéro Téléphone / WhatsApp</label>
+                    <input type="tel" id="contact-phone" required placeholder="Ex: 698 13 26 99" class="w-full text-xs sm:text-sm px-4 py-3 rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-sky-500">
+                  </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label class="block text-xs font-bold uppercase text-slate-600 dark:text-slate-400 mb-1.5">Nom de l'Entreprise ou Établissement</label>
+                    <input type="text" id="contact-company" required placeholder="Ex: Complexe Le Méridien" class="w-full text-xs sm:text-sm px-4 py-3 rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-sky-500">
+                  </div>
+                  <div>
+                    <label class="block text-xs font-bold uppercase text-slate-600 dark:text-slate-400 mb-1.5">Secteur d'activité</label>
+                    <select id="contact-sector" required class="w-full text-xs sm:text-sm px-4 py-3 rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-sky-500 font-medium">
+                      <option value="">Sélectionnez votre profil...</option>
+                      <option value="Bar / Resto">1. Bar, Restaurant, Lounge & Snack</option>
+                      <option value="Supermarché">2. Supermarché & Supérette</option>
+                      <option value="Boutique">3. Boutique & Prêt-à-porter</option>
+                      <option value="École">4. École, Collège & Université</option>
+                      <option value="Clinique">5. Clinique Médicale & Pharmacie</option>
+                      <option value="Artisan">6. Salon de coiffure, Atelier & Artisanat</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div>
+                  <label class="block text-xs font-bold uppercase text-slate-600 dark:text-slate-400 mb-1.5">Vos besoins spécifiques (points de vente, questions...)</label>
+                  <textarea id="contact-message" rows="3" placeholder="Ex: Nous souhaitons équiper 2 caisses avec imprimantes de reçus et suivre les commandes des serveurs..." class="w-full text-xs sm:text-sm px-4 py-3 rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-sky-500"></textarea>
+                </div>
+
+                <button type="submit" id="contact-submit-btn" class="w-full py-4 px-6 rounded-xl font-bold text-white bg-gradient-to-r from-sky-600 via-indigo-600 to-sky-700 hover:opacity-95 shadow-lg shadow-sky-600/30 active:scale-[0.99] transition-all text-sm flex items-center justify-center space-x-2">
+                  <i data-lucide="send" class="w-4 h-4"></i>
+                  <span>Transmettre ma demande & Obtenir mon devis gratuit</span>
+                </button>
+              </form>
+
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <footer class="bg-slate-900 text-slate-400 py-12 border-t border-slate-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8 pb-10 border-b border-slate-800">
+        
+        <div class="space-y-3">
+          <div class="flex items-center space-x-3">
+            <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-sky-500 to-indigo-500 flex items-center justify-center text-white font-black text-sm">
+              Yg
+            </div>
+            <span class="text-xl font-black text-white">Yges<span class="text-sky-400">Tion</span></span>
+          </div>
+          <p class="text-xs text-slate-400 leading-relaxed">
+            La solution progicielle complète de gestion commerciale, stocks, caisse, facturation et comptabilité pour entreprises africaines.
+          </p>
+          <div class="pt-2 text-xs text-emerald-400 font-bold flex items-center gap-1.5">
+            <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+            <span>Serveurs Sécurisés 99.9% Uptime</span>
+          </div>
+        </div>
+
+        <div>
+          <h4 class="text-xs font-bold uppercase tracking-wider text-slate-200 mb-3">Secteurs Gérés</h4>
+          <ul class="space-y-2 text-xs">
+            <li><a href="#solutions" class="hover:text-white transition-colors">Bars, Restaurants & Lounges</a></li>
+            <li><a href="#solutions" class="hover:text-white transition-colors">Supermarchés & Supérettes</a></li>
+            <li><a href="#solutions" class="hover:text-white transition-colors">Boutiques & Mode</a></li>
+            <li><a href="#solutions" class="hover:text-white transition-colors">Écoles & Universités</a></li>
+            <li><a href="#solutions" class="hover:text-white transition-colors">Cliniques Médicales</a></li>
+            <li><a href="#solutions" class="hover:text-white transition-colors">Salons de coiffure & Artisans</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="text-xs font-bold uppercase tracking-wider text-slate-200 mb-3">Accès Rapide</h4>
+          <ul class="space-y-2 text-xs">
+            <li><a href="#demo" class="hover:text-white transition-colors">Simulateur en direct</a></li>
+            <li><a href="#tarifs" class="hover:text-white transition-colors">Tarifs en Francs CFA</a></li>
+            <li><a href="#avantages" class="hover:text-white transition-colors">Fonctionnalités & Sécurité</a></li>
+            <li><a href="#temoignages" class="hover:text-white transition-colors">Témoignages clients</a></li>
+            <li><a href="#contact" class="hover:text-white transition-colors">Demande de devis</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="text-xs font-bold uppercase tracking-wider text-slate-200 mb-3">Support Officiel</h4>
+          <ul class="space-y-2.5 text-xs">
+            <li class="flex items-center gap-2">
+              <i data-lucide="phone" class="w-3.5 h-3.5 text-sky-400"></i>
+              <a href="tel:+237698132699" class="hover:text-white">+237 698 13 26 99</a>
+            </li>
+            <li class="flex items-center gap-2">
+              <i data-lucide="message-circle" class="w-3.5 h-3.5 text-emerald-400"></i>
+              <a href="https://wa.me/237698132699" target="_blank" class="hover:text-white">WhatsApp direct</a>
+            </li>
+            <li class="flex items-center gap-2">
+              <i data-lucide="mail" class="w-3.5 h-3.5 text-amber-400"></i>
+              <a href="mailto:yoanemmanuela@yahoo.com" class="hover:text-white">yoanemmanuela@yahoo.com</a>
+            </li>
+          </ul>
+        </div>
+
+      </div>
+
+      <div class="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
+        <p>&copy; <span id="current-year">2026</span> YgesTion Inc. Tous droits réservés.</p>
+        <p>Développé avec rigueur et passion pour l'essor des entreprises locales.</p>
+      </div>
+
+    </div>
+  </footer>
+
+  <div id="printable-receipt-modal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
+    <div class="bg-white dark:bg-slate-900 rounded-3xl max-w-sm w-full p-6 shadow-2xl border border-slate-200 dark:border-slate-800 text-slate-900 dark:text-white relative">
+      
+      <button onclick="closeReceiptModal()" class="absolute top-4 right-4 p-2 text-slate-400 hover:text-slate-600 dark:hover:text-white">
+        <i data-lucide="x" class="w-5 h-5"></i>
+      </button>
+
+      <div class="text-center pb-4 border-b border-dashed border-slate-300 dark:border-slate-700">
+        <div class="w-10 h-10 mx-auto rounded-xl bg-sky-600 text-white font-black flex items-center justify-center text-sm mb-2">
+          Yg
+        </div>
+        <h3 class="font-black text-lg">YgesTion POS</h3>
+        <p class="text-[11px] text-slate-500">Reçu Officiel d'Encaissement</p>
+        <p class="text-[10px] text-slate-400" id="receipt-date"></p>
+      </div>
+
+      <div class="py-4 space-y-2 text-xs border-b border-dashed border-slate-300 dark:border-slate-700">
+        <div class="flex justify-between">
+          <span class="text-slate-500">N° Ticket :</span>
+          <span class="font-bold" id="receipt-ref">#TKT-0000</span>
+        </div>
+        <div class="flex justify-between">
+          <span class="text-slate-500">Désignation :</span>
+          <span class="font-bold text-right ml-2" id="receipt-desc">Opération</span>
+        </div>
+        <div class="flex justify-between">
+          <span class="text-slate-500">Mode :</span>
+          <span class="font-semibold" id="receipt-method">Espèces</span>
+        </div>
+        <div class="flex justify-between text-sm font-black pt-2">
+          <span>TOTAL :</span>
+          <span class="text-emerald-600 dark:text-emerald-400" id="receipt-amount">0 FCFA</span>
+        </div>
+      </div>
+
+      <div class="text-center pt-4 text-[10px] text-slate-400">
+        <p>Merci pour votre confiance !</p>
+        <p class="mt-0.5">Assistance YgesTion : +237 698 13 26 99</p>
+      </div>
+
+      <div class="mt-6 flex gap-2">
+        <button onclick="window.print()" class="flex-1 py-2.5 rounded-xl font-bold text-white bg-sky-600 hover:bg-sky-500 text-xs flex items-center justify-center gap-1.5 shadow-md">
+          <i data-lucide="printer" class="w-4 h-4"></i>
+          <span>Imprimer</span>
+        </button>
+        <button onclick="closeReceiptModal()" class="py-2.5 px-4 rounded-xl font-bold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 text-xs">
+          Fermer
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    // Initialisation des icônes Lucide
+    lucide.createIcons();
+
+    // Année dynamique
+    document.getElementById('current-year').textContent = new Date().getFullYear();
+
+    // 1. Thème Sombre/Clair persistant
+    const themeBtn = document.getElementById('theme-toggle');
+    const lightIcon = document.getElementById('theme-icon-light');
+    const darkIcon = document.getElementById('theme-icon-dark');
+
+    function applyTheme(isDark) {
+      if (isDark) {
+        document.documentElement.classList.add('dark');
+        lightIcon.classList.remove('hidden');
+        darkIcon.classList.add('hidden');
+      } else {
+        document.documentElement.classList.remove('dark');
+        lightIcon.classList.add('hidden');
+        darkIcon.classList.remove('hidden');
+      }
+    }
+
+    const savedTheme = localStorage.getItem('ygestion_theme');
+    const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const initialIsDark = savedTheme ? savedTheme === 'dark' : systemPrefersDark;
+    applyTheme(initialIsDark);
+
+    themeBtn.addEventListener('click', () => {
+      const isDark = document.documentElement.classList.toggle('dark');
+      localStorage.setItem('ygestion_theme', isDark ? 'dark' : 'light');
+      applyTheme(isDark);
+    });
+
+    // 2. Menu mobile
+    const mobileBtn = document.getElementById('mobile-menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+    mobileBtn.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+    document.querySelectorAll('.mobile-nav-link').forEach(link => {
+      link.addEventListener('click', () => mobileMenu.classList.add('hidden'));
+    });
+
+    // 3. Fiches complètes des 6 secteurs d'activité
+    const sectorContentMap = {
+      bar_resto: {
+        title: "Bars, Restaurants, Lounges & Snacks",
+        desc: "Finis les trous de caisse et les bouteilles disparues. YgesTion est optimisé pour le rythme effréné des services de restauration, avec un décompte rigoureux des casiers et des shifts serveurs.",
+        points: [
+          "Gestion interactive des tables avec envoi direct des bons au bar ou à la cuisine",
+          "Suivi chirurgical des entrées/sorties de casiers de boissons et bouteilles",
+          "Clôture de caisse et réconciliation financière individuelle par serveur et par shift",
+          "Gestion des avaries, pertes de stock et verres cassés",
+          "Édition ultra-rapide de l'addition et du ticket thermique pour le client"
+        ],
+        icon: "utensils",
+        colorBadge: "text-amber-500",
+        ctaText: "Simuler la gestion d'un Bar / Restaurant"
+      },
+      supermarket: {
+        title: "Supermarchés & Supérettes Alimentaires",
+        desc: "Une puissance de traitement pour des milliers de références. Vos caissiers encaissent sans ralentissement et votre gestionnaire garde l'œil sur chaque rayon.",
+        points: [
+          "Caisse tactile ultra-réactive compatible avec tout lecteur de code-barres USB/Bluetooth",
+          "Double gestion des stocks : réserve/entrepôt versus rayons de vente",
+          "Alertes automatiques sur les dates de péremption (DLC) pour éviter les invendus",
+          "Historique des marges par famille d'articles (frais, épicerie, boissons...)",
+          "Contrôle d'ouverture et clôture de tiroir-caisse avec écarts signalés"
+        ],
+        icon: "shopping-cart",
+        colorBadge: "text-emerald-500",
+        ctaText: "Simuler un encaissement Supermarché"
+      },
+      boutique: {
+        title: "Boutiques de Mode, Cosmétiques & Prêt-à-porter",
+        desc: "Mettez en valeur votre commerce tout en évitant les dettes impayées et les erreurs d'inventaire.",
+        points: [
+          "Gestion des articles par variantes détaillées (tailles, couleurs, marques)",
+          "Envoi de tickets de caisse numériques directement sur le WhatsApp de vos clients",
+          "Carnet de crédit intégré avec rappels automatiques des créances en attente",
+          "Gestion des remises commerciales et promotions exceptionnelles au comptoir",
+          "Inventaire rapide réalisable simplement avec un smartphone"
+        ],
+        icon: "tag",
+        colorBadge: "text-indigo-500",
+        ctaText: "Simuler une vente en Boutique"
+      },
+      school: {
+        title: "Écoles, Collèges, Lycées & Universités",
+        desc: "Sécurisez totalement la chaîne de perception des frais scolaires. Finis les reçus falsifiés et les contestations de versement avec les parents d'élèves.",
+        points: [
+          "Gestion personnalisée des tranches d'écolage et soldes restant par élève",
+          "Génération de reçus numérotés infalsifiables avec signatures sécurisées",
+          "Tableau de bord de recouvrement instantané par classe et par cycle",
+          "Envoi de relevés financiers et relances de paiement aux parents par message",
+          "Suivi des charges d'exploitation de l'établissement (salaires vacataires, fournitures)"
+        ],
+        icon: "graduation-cap",
+        colorBadge: "text-sky-500",
+        ctaText: "Simuler l'enregistrement d'écolages scolaires"
+      },
+      health: {
+        title: "Cliniques Médicales, Cabinets & Pharmacies",
+        desc: "Une rigueur absolue pour la santé. Associez la facturation des actes médicaux et la traçabilité intégrale des médicaments.",
+        points: [
+          "Facturation étanche des consultations, examens de laboratoire et séjours",
+          "Gestion de la pharmacie avec traçabilité par numéro de lot et péremption",
+          "Gestion stricte de la confidentialité et des dossiers médicaux",
+          "Séparation comptable des caisses d'urgence et caisses ambulatoires",
+          "Rapports de rentabilité détaillés par médecin et par spécialité"
+        ],
+        icon: "stethoscope",
+        colorBadge: "text-rose-500",
+        ctaText: "Simuler la facturation d'un cabinet de santé"
+      },
+      artisan: {
+        title: "Salons de Coiffure, Ateliers & Métiers d'Art",
+        desc: "Donnez à votre atelier la gestion d'une grande entreprise : suivez les prestations rendues et motivez vos collaborateurs avec le calcul automatique de leurs commissions.",
+        points: [
+          "Catalogue des prestations (coupe, tresses, confection, réparation)",
+          "Calcul automatique des commissions dues à chaque employé ou apprenti",
+          "Gestion du carnet de rendez-vous et des acomptes clients",
+          "Suivi des matières premières consommées (mèches, produits, tissus)",
+          "Bilan journalier du chiffre d'affaires net pour le gérant"
+        ],
+        icon: "scissors",
+        colorBadge: "text-cyan-500",
+        ctaText: "Simuler un salon de coiffure ou atelier"
+      }
+    };
+
+    function renderSectorDetails(sectorKey) {
+      const data = sectorContentMap[sectorKey];
+      const panel = document.getElementById('sector-display-panel');
+      panel.innerHTML = `
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+          <div class="lg:col-span-7 space-y-4">
+            <div class="flex items-center space-x-3">
+              <div class="p-3 rounded-2xl bg-white dark:bg-slate-800 shadow-md ${data.colorBadge}">
+                <i data-lucide="${data.icon}" class="w-7 h-7"></i>
+              </div>
+              <h3 class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white">${data.title}</h3>
+            </div>
+            <p class="text-slate-600 dark:text-slate-300 text-sm sm:text-base leading-relaxed">${data.desc}</p>
+            <ul class="space-y-3 pt-2">
+              ${data.points.map(pt => `
+                <li class="flex items-start text-xs sm:text-sm text-slate-700 dark:text-slate-200">
+                  <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-500 mr-2.5 mt-0.5 shrink-0"></i>
+                  <span>${pt}</span>
+                </li>
+              `).join('')}
+            </ul>
+          </div>
+          <div class="lg:col-span-5 bg-white dark:bg-slate-800 p-8 rounded-3xl border border-slate-200 dark:border-slate-700 shadow-xl text-center">
+            <span class="text-xs uppercase font-bold text-slate-400">Configuration Métier Disponible</span>
+            <div class="py-10 px-4 my-4 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-dashed border-slate-300 dark:border-slate-700">
+              <i data-lucide="${data.icon}" class="w-14 h-14 mx-auto ${data.colorBadge} mb-3 animate-pulse-slow"></i>
+              <p class="text-base font-black text-slate-800 dark:text-slate-100">${data.title}</p>
+              <p class="text-xs text-slate-500 mt-1">Prêt à l'emploi en moins de 15 minutes</p>
+            </div>
+            <button onclick="switchSimulatorSector('${sectorKey}')" class="w-full py-3.5 px-4 rounded-xl font-bold text-white bg-sky-600 hover:bg-sky-500 transition-all text-xs sm:text-sm flex items-center justify-center space-x-2 shadow-md shadow-sky-600/20">
+              <span>${data.ctaText}</span>
+              <i data-lucide="arrow-right" class="w-4 h-4"></i>
+            </button>
+          </div>
+        </div>
+      `;
+      lucide.createIcons();
+    }
+
+    // Changement d'onglet secteur
+    const sectorNavButtons = document.querySelectorAll('.sector-button');
+    sectorNavButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        sectorNavButtons.forEach(b => {
+          b.classList.remove('active', 'bg-sky-600', 'text-white', 'shadow-md', 'shadow-sky-600/20');
+          b.classList.add('bg-slate-100', 'dark:bg-slate-800', 'text-slate-700', 'dark:text-slate-300');
+        });
+        btn.classList.add('active', 'bg-sky-600', 'text-white', 'shadow-md', 'shadow-sky-600/20');
+        btn.classList.remove('bg-slate-100', 'dark:bg-slate-800', 'text-slate-700', 'dark:text-slate-300');
+        renderSectorDetails(btn.getAttribute('data-target-sector'));
+      });
+    });
+    // Rendu par défaut
+    renderSectorDetails('bar_resto');
+
+    // 4. Moteur du Simulateur Interactif en direct
+    const sectorPresets = {
+      bar_resto: [
+        { id: 101, ref: 'TKT-901', label: 'Table 3 : 5 Castel + 2 Poulets braisés', type: 'income', amount: 28500, method: 'Espèces', date: 'Aujourd\'hui 14:20' },
+        { id: 102, ref: 'ACH-402', label: 'Livraison 10 Casiers Boissons Brasseries', type: 'expense', amount: 85000, method: 'Espèces', date: 'Aujourd\'hui 12:10' },
+        { id: 103, ref: 'TKT-902', label: 'Salon VIP : Champagne & Assortiments', type: 'income', amount: 95000, method: 'Mobile Money', date: 'Aujourd\'hui 15:45' }
+      ],
+      supermarket: [
+        { id: 201, ref: 'TKT-104', label: 'Caisse 1 : Panier courses & denrées alimentaires', type: 'income', amount: 48500, method: 'Espèces', date: 'Aujourd\'hui 11:30' },
+        { id: 202, ref: 'ACH-780', label: 'Arrivage Cartons Huile de table & Savons', type: 'expense', amount: 120000, method: 'Virement Bancaire', date: 'Aujourd\'hui 09:15' },
+        { id: 203, ref: 'TKT-105', label: 'Caisse 2 : Boissons & Produits frais', type: 'income', amount: 32000, method: 'Mobile Money', date: 'Aujourd\'hui 13:05' }
+      ],
+      boutique: [
+        { id: 301, ref: 'TKT-301', label: '2 Robes soirée + Sac à main cuir', type: 'income', amount: 45000, method: 'Mobile Money', date: 'Aujourd\'hui 14:00' },
+        { id: 302, ref: 'ACH-201', label: 'Frais de transport & livraison colis stock', type: 'expense', amount: 15000, method: 'Espèces', date: 'Aujourd\'hui 10:45' },
+        { id: 303, ref: 'TKT-302', label: 'Chaussures homme + Pantalon Jeans', type: 'income', amount: 38000, method: 'Espèces', date: 'Aujourd\'hui 16:10' }
+      ],
+      school: [
+        { id: 401, ref: 'TKT-881', label: 'Frais Scolarité (Tranche 2 - Classe 3ème)', type: 'income', amount: 125000, method: 'Mobile Money', date: 'Aujourd\'hui 08:30' },
+        { id: 402, ref: 'ACH-092', label: 'Achat Cartouches encre & Rames de papier', type: 'expense', amount: 42000, method: 'Espèces', date: 'Aujourd\'hui 10:15' },
+        { id: 403, ref: 'TKT-882', label: 'Inscription & Tenues (Classe Première)', type: 'income', amount: 80000, method: 'Espèces', date: 'Aujourd\'hui 11:50' }
+      ],
+      health: [
+        { id: 501, ref: 'TKT-551', label: 'Consultation Médecin + Examens Labo', type: 'income', amount: 35000, method: 'Espèces', date: 'Aujourd\'hui 09:00' },
+        { id: 502, ref: 'ACH-110', label: 'Commande Pharmacie : Sérums & Antibiotiques', type: 'expense', amount: 90000, method: 'Virement Bancaire', date: 'Aujourd\'hui 11:20' },
+        { id: 503, ref: 'TKT-552', label: 'Forfait Soins & Traitement d\'urgence', type: 'income', amount: 75000, method: 'Mobile Money', date: 'Aujourd\'hui 14:40' }
+      ],
+      artisan: [
+        { id: 601, ref: 'TKT-701', label: 'Prestation Coiffure Dame + Soins capillaires', type: 'income', amount: 25000, method: 'Mobile Money', date: 'Aujourd\'hui 12:30' },
+        { id: 602, ref: 'ACH-050', label: 'Achat Lot de Mèches & Crèmes défrisantes', type: 'expense', amount: 30000, method: 'Espèces', date: 'Aujourd\'hui 09:30' },
+        { id: 603, ref: 'TKT-702', label: 'Pose Onglerie & Pédicure complète', type: 'income', amount: 18000, method: 'Espèces', date: 'Aujourd\'hui 15:10' }
+      ]
+    };
+
+    let activeSimulatorSector = 'bar_resto';
+    let simulatorTransactions = JSON.parse(JSON.stringify(sectorPresets[activeSimulatorSector]));
+
+    function formatCurrency(amount) {
+      return new Intl.NumberFormat('fr-FR').format(amount) + ' FCFA';
+    }
+
+    function refreshSimulatorUI() {
+      let totalIncome = 0;
+      let totalExpense = 0;
+
+      simulatorTransactions.forEach(t => {
+        if (t.type === 'income') totalIncome += t.amount;
+        else totalExpense += t.amount;
+      });
+
+      const netBalance = totalIncome - totalExpense;
+
+      document.getElementById('demo-total-income').textContent = formatCurrency(totalIncome);
+      document.getElementById('demo-total-expense').textContent = formatCurrency(totalExpense);
+      document.getElementById('demo-net-balance').textContent = formatCurrency(netBalance);
+      document.getElementById('demo-count-ops').textContent = `${simulatorTransactions.length} traitée(s)`;
+
+      // Ratio de marge
+      const ratio = totalIncome > 0 ? Math.max(0, Math.round((netBalance / totalIncome) * 100)) : 0;
+      document.getElementById('demo-margin-text').textContent = `${ratio}%`;
+      document.getElementById('demo-margin-bar').style.width = `${Math.min(100, Math.max(5, ratio))}%`;
+
+      // Tableau HTML
+      const tableBody = document.getElementById('sim-table-body');
+      tableBody.innerHTML = '';
+
+      if (simulatorTransactions.length === 0) {
+        tableBody.innerHTML = `<tr><td colspan="4" class="p-6 text-center text-slate-400">Aucune opération pour le moment. Ajoutez-en une !</td></tr>`;
+        return;
+      }
+
+      simulatorTransactions.slice().reverse().forEach(tx => {
+        const row = document.createElement('tr');
+        row.className = "hover:bg-slate-50/80 dark:hover:bg-slate-800/40 transition-colors";
+        row.innerHTML = `
+          <td class="py-3 px-4">
+            <div class="font-bold text-slate-800 dark:text-slate-100">${tx.label}</div>
+            <div class="text-[10px] text-slate-400">${tx.date} • <span class="font-mono text-sky-600 dark:text-sky-400">${tx.ref}</span></div>
+          </td>
+          <td class="py-3 px-3">
+            <span class="px-2 py-0.5 rounded-lg text-xs font-semibold bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300">${tx.method}</span>
+          </td>
+          <td class="py-3 px-3 text-right font-black ${tx.type === 'income' ? 'text-emerald-600 dark:text-emerald-400' : 'text-rose-500'}">
+            ${tx.type === 'income' ? '+' : '-'}${formatCurrency(tx.amount)}
+          </td>
+          <td class="py-3 px-3 text-center">
+            <button onclick="openReceiptModal('${tx.ref}', '${tx.label}', ${tx.amount}, '${tx.method}')" title="Générer reçu" class="p-1.5 rounded-lg hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-500 hover:text-sky-600 transition-all">
+              <i data-lucide="printer" class="w-4 h-4"></i>
+            </button>
+          </td>
+        `;
+        tableBody.appendChild(row);
+      });
+
+      lucide.createIcons();
+    }
+
+    function switchSimulatorSector(secKey) {
+      activeSimulatorSector = secKey;
+      document.getElementById('demo-activity-select').value = secKey;
+      simulatorTransactions = JSON.parse(JSON.stringify(sectorPresets[secKey]));
+      
+      const inLabel = document.getElementById('demo-label-income');
+      const outLabel = document.getElementById('demo-label-expense');
+
+      if (secKey === 'bar_resto') {
+        inLabel.textContent = "Recettes Tables & Bar";
+        outLabel.textContent = "Achats Casiers & Cuisine";
+      } else if (secKey === 'supermarket') {
+        inLabel.textContent = "Ventes Caisses & Rayons";
+        outLabel.textContent = "Factures Fournisseurs";
+      } else if (secKey === 'boutique') {
+        inLabel.textContent = "Ventes Comptoir";
+        outLabel.textContent = "Réapprovisionnement Stock";
+      } else if (secKey === 'school') {
+        inLabel.textContent = "Écolages & Droits perçus";
+        outLabel.textContent = "Dépenses Établissement";
+      } else if (secKey === 'health') {
+        inLabel.textContent = "Actes Médicaux & Pharmacie";
+        outLabel.textContent = "Achats Produits Santé";
+      } else {
+        inLabel.textContent = "Prestations Réalisées";
+        outLabel.textContent = "Matières & Charges";
+      }
+
+      refreshSimulatorUI();
+      // Scroll doux vers le simulateur
+      document.getElementById('demo').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    // Sélecteur interne du simulateur
+    document.getElementById('demo-activity-select').addEventListener('change', (e) => {
+      switchSimulatorSector(e.target.value);
+    });
+
+    // Formulaire d'ajout
+    document.getElementById('sim-transaction-form').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const form = e.target;
+      const type = form.querySelector('input[name="simTxType"]:checked').value;
+      const label = document.getElementById('sim-label').value.trim();
+      const amount = parseFloat(document.getElementById('sim-amount').value);
+      const method = document.getElementById('sim-payment').value;
+
+      if (!label || isNaN(amount) || amount <= 0) return;
+
+      const newTx = {
+        id: Date.now(),
+        ref: 'TKT-' + Math.floor(100 + Math.random() * 900),
+        label: label,
+        type: type,
+        amount: amount,
+        method: method,
+        date: "À l'instant"
+      };
+
+      simulatorTransactions.push(newTx);
+      form.reset();
+      refreshSimulatorUI();
+    });
+
+    // Réinitialiser les données démo
+    document.getElementById('sim-reset-btn').addEventListener('click', () => {
+      switchSimulatorSector(activeSimulatorSector);
+    });
+
+    // Lancement initial
+    refreshSimulatorUI();
+
+    // 5. Gestion de la modale de Reçu / Ticket
+    window.openReceiptModal = function(ref, desc, amount, method) {
+      document.getElementById('receipt-ref').textContent = ref;
+      document.getElementById('receipt-desc').textContent = desc;
+      document.getElementById('receipt-amount').textContent = formatCurrency(amount);
+      document.getElementById('receipt-method').textContent = method;
+      document.getElementById('receipt-date').textContent = new Date().toLocaleString('fr-FR', { dateStyle: 'medium', timeStyle: 'short' });
+      document.getElementById('printable-receipt-modal').classList.remove('hidden');
+      lucide.createIcons();
+    };
+
+    window.closeReceiptModal = function() {
+      document.getElementById('printable-receipt-modal').classList.add('hidden');
+    };
+
+    // 6. Formulaire de contact / Devis interactif
+    const leadContactForm = document.getElementById('contact-demo-form');
+    const leadSuccessBox = document.getElementById('contact-success-box');
+    const leadSubmitBtn = document.getElementById('contact-submit-btn');
+
+    leadContactForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const name = document.getElementById('contact-name').value;
+      const phone = document.getElementById('contact-phone').value;
+      const company = document.getElementById('contact-company').value;
+      const sector = document.getElementById('contact-sector').value;
+
+      const originalBtnHTML = leadSubmitBtn.innerHTML;
+      leadSubmitBtn.disabled = true;
+      leadSubmitBtn.innerHTML = `<span>Envoi en cours...</span>`;
+
+      setTimeout(() => {
+        leadSuccessBox.classList.remove('hidden');
+        leadContactForm.reset();
+        leadSubmitBtn.disabled = false;
+        leadSubmitBtn.innerHTML = originalBtnHTML;
+        lucide.createIcons();
+        leadSuccessBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }, 700);
+    });
+  </script>
+</body>
+</html>
